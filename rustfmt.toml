@@ -1,0 +1,24 @@
+# Stable
+edition = "2018"
+max_width = 120
+tab_spaces = 4
+
+match_block_trailing_comma = true
+use_try_shorthand = true
+binop_separator = "Front"
+unstable_features = true
+blank_lines_lower_bound = 0
+blank_lines_upper_bound = 1
+fn_single_line = true
+format_macro_matchers = true
+format_strings = false
+imports_indent = "Block"
+merge_imports = true
+newline_style = "Unix"
+normalize_comments = false
+overflow_delimited_expr = true
+reorder_impl_items = true
+struct_field_align_threshold = 30
+wrap_comments = true
+indent_style = "Block"
+empty_item_single_line=false

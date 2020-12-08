@@ -1,0 +1,5 @@
+FROM rust:1.47.0
+WORKDIR /app
+RUN echo "cd /app && cargo build -p main --release;" > /start.sh
+RUN chmod +x /start.sh
+CMD /start.sh

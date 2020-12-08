@@ -1,0 +1,56 @@
+[package]
+name = "main"
+version = "0.1.0"
+authors = ["khuyennv <nguyenvankhuyen@gapo.com.vn>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = { version = "3.2.0", features=["openssl"] }
+actix-rt = "1.1.1"
+actix-service = "1.0.6"
+openssl = { version="0.10", package = "openssl", optional = true }
+
+codegen = {path="../codegen"}
+
+dotenv = "0.15.0"
+log = "0.4.8"
+env_logger = "0.8.1"
+
+# Json
+serde_derive = "1.0.115"
+serde = { version = "1.0.115", features = ["derive"] }
+serde_json = "1.0.57"
+regex = "1.4.1"
+
+failure = "0.1"
+
+lazy_static = "1.4"
+
+# Future
+futures = "0.3.6"
+futures-util = "0.3.6"
+
+# sentry
+sentry = "0.19.1"
+sentry-panic="0.19.1"
+sentry-backtrace="0.19.1"
+
+# Redis
+r2d2 = "0.8"
+r2d2_redis = "0.13.0"
+
+
+# Other
+rand = "0.7.3"
+reqwest = { version = "0.10.8", features = ["json"] }
+bytes="0.6.0"
+async-std="1.6.5"
+
+[target.'cfg(not(verify))'.dependencies]
+proptest = { version = "0.10.1" }
+
+[dev-dependencies]
+actix-http-test = "2.0.0"
+proptest = "0.10.1"

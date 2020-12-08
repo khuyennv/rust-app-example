@@ -1,0 +1,5 @@
+FROM ubuntu:18.04
+WORKDIR /app
+COPY ./target/release/main .
+RUN chmod +x ./main
+CMD ["./main"]

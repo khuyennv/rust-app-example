@@ -1,0 +1,28 @@
+@startuml
+
+box "Internal Service" #LightBlue
+Actor User
+participant A
+end box
+
+User -> A: DoWork 
+activate A
+
+A -> B: << createRequest >>
+activate B
+alt successful case
+    B -> C: DoWork
+    activate C
+
+    C --> C: Check request
+
+    C -> B: WorkDone
+    deactivate C
+
+    B --> A: RequestCreated
+    deactivate B
+end
+A -> User: Done
+deactivate A
+
+@enduml
