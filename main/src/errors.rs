@@ -103,6 +103,19 @@ impl ResponseError for ApiError {
             "code": self.code
         });
 
+        self.sent_to_sentry();
+
+        let code = match StatusCode::from_u16(self.http_code) {
+            Ok(val) => val,
+            Err(_err) => StatusCode::OK,
+        };
+
+        web::HttpResponse::build(code).json(err_json)
+    }
+}
+
+impl ApiError {
+    fn sent_to_sentry(&self) {
         let trace_max_level = 5;
         if self.http_code > 400 {
             let uuid = Uuid::new_v4();
@@ -116,8 +129,7 @@ impl ResponseError for ApiError {
                         len - trace_max_level
                     } else {
                         0
-                    }
-                };
+                    }                };
 
                 stacktrace.frames = bt.frames[start..len].to_vec();
             }
@@ -143,12 +155,5 @@ impl ResponseError for ApiError {
 
             sentry::capture_event(event.clone());
         }
-
-        let code = match StatusCode::from_u16(self.http_code) {
-            Ok(val) => val,
-            Err(_err) => StatusCode::OK,
-        };
-
-        web::HttpResponse::build(code).json(err_json)
     }
 }

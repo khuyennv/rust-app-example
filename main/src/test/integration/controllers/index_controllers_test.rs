@@ -5,6 +5,9 @@ mod test {
     use actix_web::{test, App};
     use futures_util::TryStreamExt;
     use std::str::from_utf8;
+    use crate::components::databases::redis_db::RedisDB;
+    use actix_web::web::Data;
+    use crate::controllers::index_controller;
 
     #[actix_rt::test]
     async fn test_index_get() {
@@ -12,7 +15,14 @@ mod test {
         println!("->>>>>>>>>>>>>>>>>>>>>>>....{:?}", config.env);
         let mut app = test::init_service(App::new().configure(Application::config_app())).await;
 
-        let mut test_request = test::TestRequest::with_header("content-type", "text/plain");
+        // let redis = app.data().expect("get iam key from app_data failse");
+        // let iam_keys_data = req
+        //     .app_data::<Data<Mutex<HashMap<String, String>>>>()
+            // .expect("get iam key from app_data failse");
+        let redis = RedisDB::connect(config.redis_uri.clone());
+
+        let mut test_request = test::TestRequest::get().uri("/");
+        test_request = test_request.header("content-type", "text/plain");
         test_request = test_request.header("x-gapo-role", "user");
         test_request = test_request.header("x-gapo-user-id", "10");
 

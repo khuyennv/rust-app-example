@@ -9,14 +9,14 @@ use codegen::validate_request;
 
 #[get("/")]
 pub async fn index(redis: Data<RedisDB>, req: HttpRequest) -> Result<impl Responder, ApiError> {
-    // let ret = redis.get::<String>("khuyentest1".to_string());
+    let ret = redis.get::<String>("khuyentest1".to_string());
     // println!("ret1:{:?}", ret);
     // let ret = redis.get::<Vec<u8>>("khuyentest1".to_string());
     // println!("ret2:{:?}", ret);
 
     // let ret = redis.set_nx("khuyentest12".to_string(), 10.to_string(), 3343);
     // println!("req: {:?}", req);
-    // info!("{}", "dung");
+    eprintln!("{}", "dung->>>>>>>>>>>>>>>>>>>>>>>>");
 
     if let Some(hdr) = req.headers().get(header::CONTENT_TYPE) {
         Ok(HttpResponse::Ok().body("Hello world"))
@@ -24,3 +24,22 @@ pub async fn index(redis: Data<RedisDB>, req: HttpRequest) -> Result<impl Respon
         Ok(HttpResponse::Ok().body("bye the world"))
     }
 }
+
+#[get("/test")]
+pub async fn index_test(redis: Data<RedisDB>, req: HttpRequest) -> Result<impl Responder, ApiError> {
+    // let ret = redis.get::<String>("khuyentest1".to_string());
+    // println!("ret1:{:?}", ret);
+    // let ret = redis.get::<Vec<u8>>("khuyentest1".to_string());
+    // println!("ret2:{:?}", ret);
+
+    // let ret = redis.set_nx("khuyentest12".to_string(), 10.to_string(), 3343);
+    // println!("req: {:?}", req);
+    eprintln!("{}", "dung1->>>>>>>>>>>>>>>>>>>>");
+
+    if let Some(hdr) = req.headers().get(header::CONTENT_TYPE) {
+        Ok(HttpResponse::Ok().body("Hello world me"))
+    } else {
+        Ok(HttpResponse::Ok().body("bye the world me"))
+    }
+}
+
